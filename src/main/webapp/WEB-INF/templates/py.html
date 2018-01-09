@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+    <style>
+        #body {
+            margin: auto;
+        }
+
+        input {
+            width: 40em;
+            text-align: left;
+        }
+
+        p {
+            position: relative;
+            left: 5.5em;
+            color: cadetblue;
+            text-align: center;
+        }
+
+        p, input {
+            font-size: 2em;
+            margin: 2em;
+            width: 40em;
+            height: 4em;
+            line-height: 4em;
+            border-radius: 0.7em;
+            border: solid grey 0.1em;
+        }
+
+        li {
+            font-size: 2.2em;
+        }
+    </style>
+    <script src="plugins/jquery/jquery-3.2.1.js"></script>
+</head>
+<body>
+<div id="body">
+    &ensp;&ensp;&ensp;&ensp;<p id="count">相同个数：0</p>
+    <form id="form">
+        歌单链接1：<input id="list1" title="歌单id1" type="text" value=""/>
+        <br/>
+        歌单链接2：<input id="list2" title="歌单id2" type="text" value=""/>
+    </form>
+    <div onclick="compare()">
+        &emsp;&emsp;&emsp;&emsp;&emsp;&ensp;<input id="sub_btn" title="提交" style="text-align: center" type="submit"
+                                                   value="开始匹配"/>
+    </div>
+    <ul id="list">
+    </ul>
+</div>
+</body>
+</html>

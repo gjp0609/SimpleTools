@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>index</title>
+    <style>
+        #body {
+            width: 98%;
+            margin: auto;
+        }
+
+        span {
+            font-size: 2em;
+        }
+
+        input {
+            text-align: left;
+        }
+
+        p {
+            color: cadetblue;
+            text-align: center;
+        }
+
+        p, input {
+            font-size: 2em;
+            margin: 0.5em;
+            width: 98%;
+            height: 2em;
+            line-height: 2em;
+            border-radius: 0.4em;
+            border: solid grey 0.06em;
+        }
+
+        li {
+            font-size: 2em;
+        }
+
+        #sub_btn {
+            text-align: center;
+            width: 40%;
+            margin-top: 1em;
+            margin-left: 6em;
+        }
+    </style>
+    <script src="plugins/jquery/jquery-3.2.1.js"></script>
+    <script>
+        function compare() {
+            $("#count").html("正在匹配。。。");
+            var list1 = $("#list1").val();
+            var list2 = $("#list2").val();
+            $.post("music?compare", "l1=" + list1 + "&l2=" + list2, function (data) {
+                var map = data.map;
+                $("#count").html("相同个数：" + data.total);
+                var l = $("#list");
+                l.empty();
+                for (var key in map) {
+                    var li = "<li id='" + key + "'>" + map[key] + "</li>";
+                    l.append(li);
+                }
+            }, "json");
+        }
+    </script>
+</head>
+<body>
+<div id="body">
+    <form id="form">
+        <table width="80%">
+            <tr>
+                <td></td>
+                <td><p id="count">相同个数：0</p></td>
+            </tr>
+            <tr>
+                <td><span>歌单链接1：</span></td>
+                <td><input id="list1" title="歌单id1" type="text" value=""/></td>
+            </tr>
+            <tr>
+                <td><span>歌单链接2：</span></td>
+                <td><input id="list2" title="歌单id2" type="text" value=""/></td>
+            </tr>
+        </table>
+    </form>
+
+    <div onclick="compare()">
+        <input id="sub_btn" title="提交" type="submit" value="开始匹配"/>
+    </div>
+
+    <ul id="list" style="list-style: none;margin: 2em"></ul>
+</div>
+</body>
+</html>

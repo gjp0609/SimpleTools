@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <!-- component scan -->
+    <context:component-scan base-package="me.rainbow.*">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- property holder -->
+    <context:property-placeholder location="classpath:/db/db.properties"/>
+
+    <!-- dataSource -->
+    <!--<bean id="ds" class="DataSource">-->
+    <bean id="ds" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+
+    <!-- sqlSessionFactory -->
+    <bean id="ssf" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="ds"/>
+        <property name="mapperLocations" value="classpath:mappers/*Mapper.xml"/>
+        <property name="typeAliasesPackage" value="me.rainbow.dao"/>
+    </bean>
+
+    <!-- dao -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="me.rainbow.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="ssf"/>
+    </bean>
+
+    <!-- tm -->
+    <bean id="tm" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="ds"/>
+    </bean>
+
+    <!-- annotation -->
+    <tx:annotation-driven transaction-manager="tm"/>
+
+    <!-- aspectj  -->
+    <!--<aop:aspectj-autoproxy/>-->
+
+    <!--声明hash的凭证匹配器-->
+    <!--<bean id="hashedCredentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">-->
+    <!--<property name="hashAlgorithmName" value="md5"/>-->
+    <!--<property name="hashIterations" value="233"/>-->
+    <!--</bean>-->
+
+    <!--realm-->
+    <!--<bean id="customMd5Realm" class="me.rainbow.realm.CustomMd5Realm">-->
+    <!--<property name="credentialsMatcher" ref="hashedCredentialsMatcher"/>-->
+    <!--</bean>-->
+</beans>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="me.rainbow.dao.MusicDao">
+
+    <select id="selectById" resultType="me.rainbow.entity.Music">
+        SELECT *
+        FROM music
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultType="me.rainbow.entity.Music">
+        SELECT *
+        FROM music
+    </select>
+
+    <insert id="save">
+        INSERT INTO music (id, value)
+            VALUE (#{id}, #{value})
+    </insert>
+</mapper>
